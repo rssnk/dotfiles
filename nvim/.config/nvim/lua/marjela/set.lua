@@ -31,6 +31,8 @@ vim.opt.nrformats = "bin,hex,alpha"
 vim.opt.langmap =
 "ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz"
 
+vim.opt.list = true
+vim.opt.listchars = "tab:› ,trail:·"
 vim.opt.colorcolumn = "90"
 
 -- for pretty panes separator (at least in my colorscheme)

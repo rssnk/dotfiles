@@ -13,7 +13,6 @@ HISTSIZE=10000
 HISTCONTROL=ignoreboth
 SAVEHIST=10000
 KEYTIMEOUT=1 # for quick vi mode switching
-WORDCHARS= # f*ck it
 
 # default apps
 export TERM=st-256color

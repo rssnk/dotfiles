@@ -15,6 +15,8 @@ stty stop undef
 
 # enable emacs mode
 bindkey -e
+autoload -U select-word-style
+select-word-style bash
 
 # ctrl-g like in bash
 # Define a widget to cancel the mark

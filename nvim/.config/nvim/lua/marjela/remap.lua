@@ -1,5 +1,5 @@
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+vim.keymap.set("n", "n", "nzz")
+vim.keymap.set("n", "N", "Nzz")
 
 vim.keymap.set({ "n", "v", "x" }, "<leader>y", "\"+y")
 vim.keymap.set({ "n", "v", "x" }, "<leader>p", "\"+p")

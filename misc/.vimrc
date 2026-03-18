@@ -19,5 +19,8 @@ let mapleader=" "
 map - :Ex<CR>
 map ]q :cnext<CR>
 map [q :cprev<CR>
+map ]b :bn<CR>
+map [b :bp<CR>
+map <leader>b :ls<CR>:b
 map <leader>co :copen<CR>
 map <leader>cc :cclose<CR>
