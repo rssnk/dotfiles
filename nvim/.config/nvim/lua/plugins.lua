@@ -117,21 +117,6 @@ vim.keymap.set('n', '_', function()
     require('oil.actions').open_cwd.callback()
 end)
 
--- require('nvim-treesitter.config').setup({
---     ensure_installed = {
---         'c', 'lua', 'go', 'comment', 'bash', 'sql', 'markdown', 'markdown_inline'
---     },
---     sync_install = false,
---     auto_install = true,
---     indent = {
---         enable = false
---     },
---     highlight = {
---         enable = true,
---         additional_vim_regex_highlighting = false
---     }
--- })
-
 local ts_parsers = {
     'c', 'cpp', 'lua', 'go', 'comment', 'bash', 'sql', 'markdown', 'markdown_inline'
 }
