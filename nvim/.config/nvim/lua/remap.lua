@@ -11,3 +11,7 @@ vim.keymap.set("n", "<leader>co", ":copen<CR>")
 vim.keymap.set("n", "<leader>cc", ":ccl<CR>")
 
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
+
+vim.keymap.set('n', '<leader>D', function()
+    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { silent = true, noremap = true })

@@ -3,7 +3,7 @@ alias soenv='source $ZDOTDIR/.zshenv'
 
 alias xbps-install='sudo xbps-install -S'
 alias xbps-remove='sudo xbps-remove'
-alias uxbps='yes | sudo xbps-install -u xbps && yes | sudo xbps-install -Su'
+alias uxbps='yes | sudo xbps-install -u xbps && sudo xbps-install -Su'
 
 alias ls='ls --color=auto'
 alias l='ls -oght --color=auto'
@@ -16,8 +16,7 @@ alias rm='rm -v'
 alias pgrep='pgrep -l'
 alias pkill='pkill -e'
 
-alias ff='fastfetch -l sparky --logo-color-1 white --color magenta'
-alias audio='pkill wireplumber && pkill pipewire && sleep 0.3 && ( pipewire &> /dev/null & )'
+alias fetch='fastfetch -l sparky --logo-color-1 white --color magenta'
 alias pagent-start='( $HOME/downloads/postman_agent/postman_agent &> /dev/null & ) && echo postman agent started'
 alias pagent-kill='pkill -e "postman-agent|postman_agent"'
 

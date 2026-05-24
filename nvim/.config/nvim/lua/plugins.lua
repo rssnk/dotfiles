@@ -14,7 +14,8 @@ vim.pack.add({
     'https://github.com/brenoprata10/nvim-highlight-colors',
     'https://github.com/tpope/vim-surround',
     'https://github.com/tpope/vim-repeat',
-    'https://github.com/chrishrb/gx.nvim'
+    'https://github.com/chrishrb/gx.nvim',
+    'https://github.com/junegunn/vim-easy-align'
 })
 
 require('mason').setup()
@@ -124,6 +125,7 @@ require('nvim-treesitter').install(ts_parsers)
 vim.api.nvim_create_autocmd('PackChanged', {
     callback = function() require('nvim-treesitter').update() end
 })
+vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
 vim.api.nvim_create_autocmd('FileType', {
     callback = function(args)

@@ -30,32 +30,42 @@ function cancel-mark() {
 zle -N cancel-mark
 bindkey "^g" cancel-mark
 
-# systemclipboard integration
-x-copy-region-as-kill () {
-    zle copy-region-as-kill
-    print -rn -- $CUTBUFFER | xclip -i -selection clipboard
-}
-x-backward-kill-line () {
-    zle backward-kill-line
-    print -rn -- $CUTBUFFER | xclip -i -selection clipboard
-}
-x-kill-region () {
-    zle kill-region
-    print -rn -- $CUTBUFFER | xclip -i -selection clipboard
-}
-x-yank () {
-    CUTBUFFER=$(xclip -o -selection clipboard)
-    zle yank
-}
-zle -N x-copy-region-as-kill
-zle -N x-backward-kill-line
-zle -N x-kill-region
-zle -N x-yank
 
-bindkey \\ew x-copy-region-as-kill
-bindkey \^u x-backward-kill-line
-bindkey \^w x-kill-region
-bindkey \^y x-yank
+if [[ -z "$SSH_CLIENT" && -z "$SSH_CONNECTION" && -v DISPLAY ]]; then
+    # systemclipboard integration
+    x-copy-region-as-kill () {
+        zle copy-region-as-kill
+        print -rn -- $CUTBUFFER | xclip -i -selection clipboard
+    }
+    x-kill-line () {
+        zle kill-line
+        print -rn -- $CUTBUFFER | xclip -i -selection clipboard
+    }
+    x-backward-kill-line () {
+        zle backward-kill-line
+        print -rn -- $CUTBUFFER | xclip -i -selection clipboard
+    }
+    x-kill-region () {
+        zle kill-region
+        print -rn -- $CUTBUFFER | xclip -i -selection clipboard
+    }
+    x-yank () {
+        CUTBUFFER=$(xclip -o -selection clipboard)
+        zle yank
+    }
+
+    zle -N x-copy-region-as-kill
+    zle -N x-kill-line
+    zle -N x-backward-kill-line
+    zle -N x-kill-region
+    zle -N x-yank
+
+    bindkey \\ew x-copy-region-as-kill
+    bindkey \^u x-backward-kill-line
+    bindkey \^k x-kill-line
+    bindkey \^w x-kill-region
+    bindkey \^y x-yank
+fi
 
 # disable fwd-i-search
 bindkey -r '^S'
@@ -70,7 +80,17 @@ source $ZDOTDIR/completion.zsh
 # fzf
 source <(fzf --zsh)
 
+# colored less
+## begin bold text mode
+export LESS_TERMCAP_md=$'\e[1;35m'
+## end all special formatting started by mb/md/etc.
+export LESS_TERMCAP_me=$'\e[0m'
+## begin underline mode
+export LESS_TERMCAP_us=$'\e[4;1;36m'
+## end underline mode
+export LESS_TERMCAP_ue=$'\e[0m'
+
 # startx when logging in first tty
 if [[ -z $DISPLAY  ]] && [[ $(tty) = /dev/tty1 ]]; then
-    exec startx &>/dev/null
+    exec dbus-run-session startx
 fi

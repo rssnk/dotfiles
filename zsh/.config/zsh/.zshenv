@@ -22,9 +22,10 @@ export EDITOR=nvim
 export FCEDIT=$EDITOR
 
 # paging
-export MANPAGER=moar
-export PAGER=moar
-export MOAR='-no-statusbar -wrap'
+export MANPAGER=moor
+export PAGER=moor
+# export MOOR='-no-statusbar -wrap -colors 16M'
+export MOOR='-no-statusbar -wrap'
 
 # misc
 export GTK_THEME=Adwaita:dark
