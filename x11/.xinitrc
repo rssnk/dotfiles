@@ -4,6 +4,7 @@
 export XDG_SESSION_TYPE=x11
 export XDG_CURRENT_DESKTOP=dwm
 
+dbus-update-activation-environment DISPLAY
 
 pipewire &
 

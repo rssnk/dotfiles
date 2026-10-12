@@ -40,3 +40,7 @@ export GOPATH=$HOME/dev/go
 # fzf
 export FZF_DEFAULT_OPTS="--reverse --style=minimal -m --no-scrollbar"
 export FZF_CTRL_T_COMMAND="fd . $HOME --type f -H -E '.steam*'"
+
+# dotnet
+[[ "$PATH" == */.local/opt/.dotnet* ]] || PATH="$PATH:$HOME/.local/opt/.dotnet"
+[[ "$PATH" == */.local/opt/.dotnet/tools* ]] || PATH="$PATH:$HOME/.local/opt/.dotnet/tools"

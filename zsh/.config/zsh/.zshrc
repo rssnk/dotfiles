@@ -37,34 +37,34 @@ if [[ -z "$SSH_CLIENT" && -z "$SSH_CONNECTION" && -v DISPLAY ]]; then
         zle copy-region-as-kill
         print -rn -- $CUTBUFFER | xclip -i -selection clipboard
     }
-    x-kill-line () {
-        zle kill-line
-        print -rn -- $CUTBUFFER | xclip -i -selection clipboard
-    }
-    x-backward-kill-line () {
-        zle backward-kill-line
-        print -rn -- $CUTBUFFER | xclip -i -selection clipboard
-    }
     x-kill-region () {
         zle kill-region
         print -rn -- $CUTBUFFER | xclip -i -selection clipboard
     }
-    x-yank () {
-        CUTBUFFER=$(xclip -o -selection clipboard)
-        zle yank
-    }
+    # x-kill-line () {
+    #     zle kill-line
+    #     print -rn -- $CUTBUFFER | xclip -i -selection clipboard
+    # }
+    # x-backward-kill-line () {
+    #     zle backward-kill-line
+    #     print -rn -- $CUTBUFFER | xclip -i -selection clipboard
+    # }
+    # x-yank () {
+    #     CUTBUFFER=$(xclip -o -selection clipboard)
+    #     zle yank
+    # }
 
     zle -N x-copy-region-as-kill
-    zle -N x-kill-line
-    zle -N x-backward-kill-line
     zle -N x-kill-region
-    zle -N x-yank
+    # zle -N x-kill-line
+    # zle -N x-backward-kill-line
+    # zle -N x-yank
 
     bindkey \\ew x-copy-region-as-kill
-    bindkey \^u x-backward-kill-line
-    bindkey \^k x-kill-line
     bindkey \^w x-kill-region
-    bindkey \^y x-yank
+    # bindkey \^u x-backward-kill-line
+    # bindkey \^k x-kill-line
+    # bindkey \^y x-yank
 fi
 
 # disable fwd-i-search

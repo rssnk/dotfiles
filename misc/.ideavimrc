@@ -26,14 +26,6 @@ set updatetime = 50
 
 let mapleader = " "
 
--- center cursor while navigating
-nmap <C-d>  <C-d>zz
-nmap <C-u>  <C-u>zz
-
--- keeps searching results in the middle
-nmap n  nzz
-nmap N  nzz
-
 -- pasting without loosing yanked content
 xmap <leader>P "_d
 
