@@ -20,3 +20,8 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.cmd("compiler go")
     end,
 })
+
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+    pattern = "*",
+    command = "checktime",
+})

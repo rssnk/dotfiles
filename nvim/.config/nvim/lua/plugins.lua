@@ -15,8 +15,11 @@ vim.pack.add({
     'https://github.com/tpope/vim-surround',
     'https://github.com/tpope/vim-repeat',
     'https://github.com/chrishrb/gx.nvim',
-    'https://github.com/junegunn/vim-easy-align'
+    'https://github.com/junegunn/vim-easy-align',
+    -- 'https://github.com/ThePrimeagen/git-worktree.nvim'
 })
+
+require('nvim-highlight-colors').setup({})
 
 require('mason').setup()
 require('mason-lspconfig').setup({
@@ -125,7 +128,6 @@ require('nvim-treesitter').install(ts_parsers)
 vim.api.nvim_create_autocmd('PackChanged', {
     callback = function() require('nvim-treesitter').update() end
 })
-vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
 vim.api.nvim_create_autocmd('FileType', {
     callback = function(args)
@@ -134,6 +136,11 @@ vim.api.nvim_create_autocmd('FileType', {
         if vim.treesitter.language.add(lang) then
             vim.treesitter.start()
         end
+
+        local ts_indent = "v:lua.require'nvim-treesitter'.indentexpr()"
+        -- if filetype ~= 'java' then
+        vim.bo.indentexpr = ts_indent
+        -- end
     end
 })
 
@@ -149,7 +156,7 @@ require('gitsigns').setup({
         end
 
         -- show changes
-        map('n', '<leader>gs', gitsigns.preview_hunk)
+        map('n', '<leader>G', gitsigns.preview_hunk)
         -- list hunks in cur buff
         map('n', '<leader>gl', gitsigns.setqflist)
 
@@ -185,6 +192,46 @@ require('fzf-lua').setup({
             ['alt-f'] = 'forward-word',
         },
     },
+    git = {
+        worktrees = {
+            cmd = "git worktree list | grep -v \'(bare)\'",
+            preview = 'git log --decorate=short --color=always',
+            actions = {
+                ["enter"] = function(selected, opts)
+                    if not selected or #selected == 0 then return end
+
+                    local new_wt_path = selected[1]:match("^([^%s]+)")
+                    if not new_wt_path then return end
+
+                    local cur_buf_path = vim.api.nvim_buf_get_name(0)
+                    local cur_git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+
+                    vim.cmd.cd(new_wt_path)
+
+                    if cur_buf_path ~= "" and cur_git_root then
+                        local escaped_root = cur_git_root:gsub("(%W)", "%%%1")
+                        local rel_file_path = cur_buf_path:gsub("^" .. escaped_root .. "/", "")
+
+                        -- handle oil buffers
+                        local oil_regex = '^oil://'
+                        if rel_file_path:match(oil_regex) then
+                            local raw_oil_path = rel_file_path:gsub(oil_regex, '')
+                            local new_oil_path = new_wt_path .. raw_oil_path:sub(#cur_git_root + 1)
+                            require('oil').open(new_oil_path, {})
+                            return
+                        end
+
+                        local target_file_path = new_wt_path .. "/" .. rel_file_path
+                        if vim.fn.filereadable(target_file_path) == 1 then
+                            vim.cmd("edit " .. vim.fn.fnameescape(target_file_path))
+                        else
+                            vim.cmd("edit .")
+                        end
+                    end
+                end,
+            },
+        },
+    }
 })
 
 local fzf = require('fzf-lua')
@@ -212,9 +259,13 @@ vim.keymap.set('n', '<leader>H', function()
     fzf.helptags()
 end, { desc = 'Fuzzy find help tags' })
 
-vim.keymap.set('n', 'gS', function()
+vim.keymap.set('n', 'gs', function()
     fzf.live_grep()
 end, { desc = 'Live grep through open buffers' })
+
+vim.keymap.set('n', '<leader>gw', function()
+    fzf.git_worktrees({ fzf_opts = { ["--with-nth"] = "3" } })
+end, { desc = 'Fuzzy find git worktrees' })
 
 vim.g.netrw_nogx = 1
 require('gx').setup({
