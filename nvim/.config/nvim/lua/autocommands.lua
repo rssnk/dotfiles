@@ -25,3 +25,9 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHo
     pattern = "*",
     command = "checktime",
 })
+
+vim.api.nvim_create_autocmd("VimResized", {
+    callback = function()
+        vim.cmd("wincmd =")
+    end,
+})

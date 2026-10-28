@@ -56,15 +56,8 @@ if [[ -z "$SSH_CLIENT" && -z "$SSH_CONNECTION" && -v DISPLAY ]]; then
 
     zle -N x-copy-region-as-kill
     zle -N x-kill-region
-    # zle -N x-kill-line
-    # zle -N x-backward-kill-line
-    # zle -N x-yank
-
     bindkey \\ew x-copy-region-as-kill
     bindkey \^w x-kill-region
-    # bindkey \^u x-backward-kill-line
-    # bindkey \^k x-kill-line
-    # bindkey \^y x-yank
 fi
 
 # disable fwd-i-search
