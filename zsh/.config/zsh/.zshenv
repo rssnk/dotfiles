@@ -15,7 +15,8 @@ SAVEHIST=10000
 KEYTIMEOUT=1 # for quick vi mode switching
 
 # default apps
-export TERM=st-256color
+export TERM=xterm-kitty
+# export TERM=st-256color
 # export TERM=xterm-256color
 export TERMINAL=$TERM
 export EDITOR=nvim
