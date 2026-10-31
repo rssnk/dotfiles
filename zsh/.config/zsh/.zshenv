@@ -39,7 +39,7 @@ export GOPATH=$HOME/dev/go
 # [[ "$PATH" == *$CARGO_HOME/bin* ]] || PATH="$PATH:$CARGO_HOME/bin"
 
 # fzf
-export FZF_DEFAULT_OPTS="--reverse --style=minimal -m --no-scrollbar"
+export FZF_DEFAULT_OPTS="--reverse --style=minimal -m --no-scrollbar --bind=ctrl-k:kill-line"
 export FZF_CTRL_T_COMMAND="fd . $HOME --type f -H -E '.steam*'"
 
 # dotnet

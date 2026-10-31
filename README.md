@@ -28,3 +28,9 @@ it'll create symlink for zsh config inside home
     - [moar](https://github.com/walles/moar) - for paging log, diff etc.
 - mpv
     - [yt-dlp](https://github.com/yt-dlp/yt-dlp) - for streaming videos from youtube.com
+- ranger
+    - w3m - for previewing images in terminal (including videos, pdfs)
+    - bat - for previewing text
+    - ffmpegthumbnailer - for previewing videos
+    - pdftoppm - for previewing pdf
+    - atool - for archives
