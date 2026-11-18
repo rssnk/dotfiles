@@ -1,0 +1,70 @@
+* {
+  font-family: "CaskaydiaMono NF", sans-serif !important;
+  font-size: 16px !important;
+}
+
+:root {
+  --bg: var(--zen-colors-secondary);
+  --fg: var(--toolbox-text-color);
+  --highlight: var(--tab-background-color-hover);
+}
+
+/* triple dot and context menus */
+menupopup {
+    color-scheme: dark !important;
+    --panel-background-color: var(--bg) !important;
+    --panel-text-color: var(--fg) !important;
+    --panel-color: var(--fg) !important;
+}
+menupopup > menuitem, menupopup > menu {
+    background-color: var(--bg) !important;
+    color: var(--fg) !important;
+}
+menupopup > menuitem:hover, menupopup > menu:hover {
+    background-color: var(--highlight) !important;
+    color: var(--fg) !important;
+}
+#appMenu-mainView {
+    background-color: var(--bg) !important;
+    color: var(--fg) !important;
+}
+#appMenu-mainView toolbarbutton:hover {
+    background-color: var(--highlight) !important;
+    color: var(--fg) !important;
+}
+
+/* library (history spaces downloads menu) */
+zen-library {
+  & #zen-library-side {
+    background: var(--bg) !important;
+  }
+}
+
+/* bookmarks menu and extensions popup */
+#sidebar-box {
+    background: var(--bg) !important;
+}
+
+/* extensions popup */
+.panel-viewcontainer {
+    background: var(--bg) !important;
+}
+.unified-extensions-item-row-wrapper * {
+    font-size: 12px !important;
+}
+.permission-popup-permission-label-container * {
+    font-size: 14px !important;
+}
+
+/* disable window controls (i'm fucking wm nerd) */
+.titlebar-buttonbox {
+    display: none !important;
+}
+
+/* triple dot menu disabling some entries */
+#appMenu-fxa-status2, #appMenu-fxa-separator,
+#appMenu-new-tab-button2, #appMenu-new-window-button2,
+#appMenu-print-button2, #appMenu-save-file-button2, #appMenu-find-button2,
+#appMenu-settings-button {
+    display: none !important;
+}

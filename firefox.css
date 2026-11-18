@@ -1,0 +1,54 @@
+* {
+  font-family: "CaskaydiaMono NF", sans-serif !important;
+  font-size: 16px;
+}
+
+:root {
+  --bg: #000000;
+  --fg: #ffffff;
+  --highlight: #2a2a2a;
+}
+
+/* #nav-bar { */
+/*   background-color: var(--bg) !important; */
+/*   color: var(--fg) !important; */
+/* } */
+/* #urlbar-background { */
+/*   background-color: var(--bg) !important; */
+/* } */
+/* .tab-background:is([selected], [multiselected]) { */
+/*   background-color: var(--highlight) !important; */
+/* } */
+
+
+/* context menu */
+menupopup {
+    color-scheme: dark !important;
+    --panel-background-color: var(--bg) !important;
+    --panel-text-color: var(--fg) !important;
+    --panel-color: var(--fg) !important;
+}
+menupopup > menuitem, menupopup > menu {
+    background-color: var(--bg) !important;
+    color: var(--fg) !important;
+}
+menupopup > menuitem:hover, menupopup > menu:hover {
+    background-color: var(--highlight) !important;
+    color: var(--fg) !important;
+}
+
+/* vimium
+/ #ui /
+.LH {
+  background: #282a36 !important;
+  color: #f8f8f2 !important;
+  border: 1px solid #ff79c6 !important;
+  font-size: 12px !important;
+  border-radius: 4px !important;
+}
+/ #omni /
+* {
+  font-family: "CaskaydiaMono NF", sans-serif !important;
+  font-size: 16px;
+}
+*/

@@ -34,13 +34,13 @@ export QT_QPA_PLATFORMTHEME=qt6ct
 export GOPATH=$HOME/dev/go
 # add go binaries to path
 [[ "$PATH" == *$GOPATH/bin* ]] || PATH="$PATH:$GOPATH/bin"
-# export CARGO_HOME=$HOME/dev/cargo
-# # add cargo binaries to path
-# [[ "$PATH" == *$CARGO_HOME/bin* ]] || PATH="$PATH:$CARGO_HOME/bin"
+export CARGO_HOME=$HOME/dev/cargo
+# add cargo binaries to path
+[[ "$PATH" == *$CARGO_HOME/bin* ]] || PATH="$PATH:$CARGO_HOME/bin"
 
 # fzf
 export FZF_DEFAULT_OPTS="--reverse --style=minimal -m --no-scrollbar --bind=ctrl-k:kill-line"
-export FZF_CTRL_T_COMMAND="fd . $HOME --type f -H -E '.steam*'"
+export FZF_CTRL_T_COMMAND="fd . $HOME -H -E '.steam*'"
 
 # dotnet
 [[ "$PATH" == */.local/opt/.dotnet* ]] || PATH="$PATH:$HOME/.local/opt/.dotnet"

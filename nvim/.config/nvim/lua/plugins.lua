@@ -15,19 +15,16 @@ vim.pack.add({
     'https://github.com/tpope/vim-surround',
     'https://github.com/tpope/vim-repeat',
     'https://github.com/chrishrb/gx.nvim',
-    'https://github.com/junegunn/vim-easy-align',
-    -- 'https://github.com/ThePrimeagen/git-worktree.nvim'
+    'https://github.com/junegunn/vim-easy-align', -- annoying, maybe there's an option exactly like in emacs
+    'https://github.com/arecarn/vim-auto-autoread',
 })
 
 require('nvim-highlight-colors').setup({})
 
+local servers = { 'clangd', 'gopls', 'lua_ls', 'jdtls' }
 require('mason').setup()
 require('mason-lspconfig').setup({
-    ensure_installed = {
-        'clangd',
-        'gopls',
-        'lua_ls',
-    },
+    ensure_installed = servers,
     automatic_installation = true,
     automatic_enable = false -- very important
 })
@@ -36,17 +33,27 @@ vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         if not client then return end
-        -- not enable formatting for clangd this formatter is very annoying
-        if client.name ~= 'clangd' and client:supports_method('textDocument/formatting', { bufnr = 0 }) then
-            -- format buf on save
-            vim.api.nvim_create_autocmd('BufWritePre', {
-                buffer = args.buf,
-                callback = function()
-                    vim.lsp.buf.format({
-                        bufnr = args.buf,
-                        id = client.id,
-                    })
-                end
+        -- enable formatting except for clangd (annoying) and jdtls
+        if client.name ~= 'clangd' and client.name ~= 'jdtls' then
+            if client:supports_method('textDocument/formatting', { bufnr = 0 }) then
+                -- format buf on save
+                vim.api.nvim_create_autocmd('BufWritePre', {
+                    buffer = args.buf,
+                    callback = function()
+                        vim.lsp.buf.format({
+                            bufnr = args.buf,
+                            id = client.id,
+                        })
+                    end
+                })
+            end
+        end
+
+        -- disable lsp highlighting for jdtls (cause it's too slow)
+        if client.name == "jdtls" then
+            vim.lsp.semantic_tokens.enable(false, {
+                bufnr = args.buf,
+                client_id = client.id,
             })
         end
 
@@ -63,8 +70,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 vim.lsp.config('lua_ls', { settings = { Lua = { diagnostics = { globals = { 'vim' } } } } })
+vim.lsp.config('jdtls', {
+    cmd = {
+        'jdtls', '--jvm-arg=-javaagent:' .. vim.fn.expand("$MASON/share/jdtls/lombok.jar")
+    },
+})
 
-local servers = { 'clangd', 'gopls', 'lua_ls' }
 for _, name in pairs(servers) do
     vim.lsp.enable(name)
 end
@@ -80,7 +91,9 @@ require('lualine').setup({
 
     sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'branch' },
+        lualine_b = { function()
+            return vim.b.git_worktree or ""
+        end, 'branch' },
         lualine_c = { function()
             local bufname = vim.api.nvim_buf_get_name(0)
             if bufname:match('^oil://') then
@@ -158,7 +171,7 @@ require('gitsigns').setup({
         -- show changes
         map('n', '<leader>G', gitsigns.preview_hunk)
         -- list hunks in cur buff
-        map('n', '<leader>gl', gitsigns.setqflist)
+        map('n', '<leader>gq', gitsigns.setqflist)
 
         -- reseting
         map('n', '<leader>gr', gitsigns.reset_hunk)
@@ -263,7 +276,7 @@ vim.keymap.set('n', 'gs', function()
     fzf.live_grep()
 end, { desc = 'Live grep through open buffers' })
 
-vim.keymap.set('n', '<leader>gw', function()
+vim.keymap.set('n', '<leader>w', function()
     fzf.git_worktrees({ fzf_opts = { ["--with-nth"] = "3" } })
 end, { desc = 'Fuzzy find git worktrees' })
 

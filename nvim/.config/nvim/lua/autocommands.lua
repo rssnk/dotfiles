@@ -21,13 +21,25 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
-vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
-    pattern = "*",
-    command = "checktime",
-})
-
 vim.api.nvim_create_autocmd("VimResized", {
     callback = function()
         vim.cmd("wincmd =")
     end,
+})
+
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+    pattern = "*",
+    callback = function()
+        -- get current worktree
+        local git_root = vim.fs.root(0, ".git")
+        if git_root then
+            vim.b.git_worktree = vim.fn.system(
+                'cd ' .. git_root .. ' && '
+                .. 'git rev-parse --show-toplevel | '
+                .. 'sed -E \'s|.*/([^/]+)$|\\1|\''
+            ):sub(1, -2) .. ':'
+        else
+            vim.b.git_worktree = nil
+        end
+    end
 })

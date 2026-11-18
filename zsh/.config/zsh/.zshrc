@@ -3,6 +3,7 @@ setopt extendedglob # extended pattern matches
 setopt nomatch      # print error if patterns not matches
 setopt notify       # notify about jobs imidiately
 unsetopt beep
+unsetopt autocd
 
 setopt globdots             # include dotfiles
 setopt interactive_comments # allow comments in shell

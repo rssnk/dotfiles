@@ -12,6 +12,7 @@ vim.opt.smartindent = false
 vim.opt.cinoptions = ':0(0,W4'
 
 vim.opt.guicursor = ""
+-- vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,a:blinkwait0-blinkon0-blinkoff0"
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undofile = true
